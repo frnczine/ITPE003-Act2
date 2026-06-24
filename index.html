@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Google Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #e1e6ec, #2f7250);
+      padding: 20px;
+    }
+    form {
+      background: rgba(238, 234, 217, 0.95);
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(4, 57, 65, 0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    fieldset {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+
+<form id="googleForm">
+  <label for="name">Name</label>
+  <input type="text" name="name" id="name" required>
+
+  <label for="bookType">Book Type</label>
+  <select name="bookType" id="bookType">
+    <option value="Paperback">Paperback</option>
+    <option value="Hardcover">Hardcover</option>
+    <option value="Other">Other (e.g. Deluxe Edition)</option>
+  </select>
+
+  <fieldset>
+    <legend>Genre</legend>
+    <label><input type="radio" name="genre" value="Dystopian"> Dystopian</label>
+    <label><input type="radio" name="genre" value="Romance"> Romance</label>
+    <label><input type="radio" name="genre" value="Fantasy"> Fantasy</label>
+    <label><input type="radio" name="genre" value="Horror"> Horror</label>
+  </fieldset>
+
+  <label for="title">Title</label>
+  <textarea name="title" id="title" rows="4"></textarea>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+
+// the address which you will attach here will be generated in the Google Apps Script
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzVcotDWvcKMdhRYZdmrEy-NyQB8S7IQ3kkrzA7T5-bb06B4tsJVHR_DhAES2PMPS6R2A/exec';
+  const form = document.getElementById('googleForm');
+
+//When the user clicks the submit button, this function runs.
+  form.addEventListener('submit', e => {
+    e.preventDefault(); //This stops the browser’s default action of reloading 
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+        alert("Form submitted successfully!");
+        form.reset();
+      })
+      .catch(error => alert('Error!', error.message));
+  });
+</script>
+
+</body>
+</html>
+
